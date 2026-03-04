@@ -72,6 +72,25 @@ All resume content lives in **`lib/data.ts`**. Edit that file to update any sect
 
 ---
 
+## 🚢 Deployment (GitHub Pages)
+
+The site is automatically deployed to GitHub Pages on every push to `main` via GitHub Actions.
+
+**Live URL:** https://Kshitiztyagi23.github.io/kshitiz-resume/
+
+### First-time setup
+
+1. Go to **Settings → Pages** in this repository.
+2. Under **Build and deployment → Source**, select **GitHub Actions**.
+3. Push to `main` (or trigger manually via **Actions → Deploy to GitHub Pages → Run workflow**).
+
+### Triggering a deployment
+
+- **Automatic:** Push any commit to the `main` branch.
+- **Manual:** Go to **Actions → Deploy to GitHub Pages → Run workflow**.
+
+---
+
 ## 🎨 Design
 
 - **Theme:** Modern Dark (midnight background `#0a0a12`)
