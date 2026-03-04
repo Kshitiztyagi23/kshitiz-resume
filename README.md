@@ -1,99 +1,28 @@
-# Kshitiz Tyagi — Personal Resume Website
+# Kshitiz Tyagi — Portfolio
 
-A modern, dark-themed personal portfolio/resume website built with **Next.js 15**, **TypeScript**, and **Tailwind CSS**.
+**B.Tech, Biological Sciences & Bioengineering · IIT Kanpur (2023–2027)**  
+Building intelligent systems at the intersection of AI, neuroscience, and bioengineering.
 
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-Install **Node.js** (v18 or later):  
-👉 https://nodejs.org/en/download
-
-### Setup
-
-```bash
-# 1. Navigate to project folder
-cd kshitiz-resume
-
-# 2. Install dependencies
-npm install
-
-# 3. Run the development server
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+🔗 **Live:** [kshitiztyagi23.github.io/kshitiz-resume](https://kshitiztyagi23.github.io/kshitiz-resume/)  
+📧 ktyagi23@iitk.ac.in · [LinkedIn](https://linkedin.com/in/kshitiz-tyagi) · [GitHub](https://github.com/Kshitiztyagi23)
 
 ---
 
-## 📦 Build for Production
+## What's Inside
 
-```bash
-npm run build
-npm run start
-```
-
----
-
-## 🗂 Project Structure
-
-```
-kshitiz-resume/
-├── app/
-│   ├── globals.css        # Global styles + Tailwind
-│   ├── layout.tsx         # Root layout with metadata
-│   └── page.tsx           # Main page (assembles all sections)
-├── components/
-│   ├── NavBar.tsx         # Sticky navigation with active-section highlight
-│   ├── Hero.tsx           # Full-screen hero with stats
-│   ├── Education.tsx      # Academic qualifications table
-│   ├── Achievements.tsx   # Scholastic honors grid
-│   ├── Experience.tsx     # Work experience cards
-│   ├── Projects.tsx       # Projects grid with tags
-│   ├── Skills.tsx         # Categorized technical skills
-│   ├── Positions.tsx      # Positions of responsibility
-│   ├── Courses.tsx        # Relevant coursework
-│   ├── ExtraCurricular.tsx# Activities & achievements
-│   └── Footer.tsx         # Contact section + footer
-├── lib/
-│   └── data.ts            # All resume content (edit here to update)
-├── tailwind.config.ts
-├── next.config.js
-└── tsconfig.json
-```
+| Section | Highlights |
+|---|---|
+| **Education** | B.Tech IIT Kanpur (CPI 8.8), CBSE XII (95.4%) |
+| **Experience** | Research & industry roles in AI/ML and bioengineering |
+| **Projects** | End-to-end ML, neuro-AI, and bioinformatics projects |
+| **Skills** | Python, C++, PyTorch, TensorFlow, React, Next.js and more |
+| **Achievements** | Academic honors, competitive rankings, scholarships |
+| **Positions** | Leadership roles in clubs and student bodies |
+| **Courses** | Relevant coursework in ML, neuroscience, and engineering |
 
 ---
 
-## ✏️ Customization
+## Built With
 
-All resume content lives in **`lib/data.ts`**. Edit that file to update any section without touching the components.
-
----
-
-## 🚢 Deployment (GitHub Pages)
-
-The site is automatically deployed to GitHub Pages on every push to `main` via GitHub Actions.
-
-**Live URL:** https://Kshitiztyagi23.github.io/kshitiz-resume/
-
-### First-time setup
-
-1. Go to **Settings → Pages** in this repository.
-2. Under **Build and deployment → Source**, select **GitHub Actions**.
-3. Push to `main` (or trigger manually via **Actions → Deploy to GitHub Pages → Run workflow**).
-
-### Triggering a deployment
-
-- **Automatic:** Push any commit to the `main` branch.
-- **Manual:** Go to **Actions → Deploy to GitHub Pages → Run workflow**.
-
----
-
-## 🎨 Design
-
-- **Theme:** Modern Dark (midnight background `#0a0a12`)
-- **Accents:** Electric Cyan `#00d4ff` · Purple `#8b5cf6` · Neon Green `#00ff88`
-- **Typography:** Inter + JetBrains Mono
-- **Features:** Smooth scroll, sticky nav with active-section tracking, glassmorphism cards, hover glow effects, animated hero
+Next.js 15 · TypeScript · Tailwind CSS · Framer Motion  
+Deployed via GitHub Actions → GitHub Pages
