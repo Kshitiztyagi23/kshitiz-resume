@@ -65,7 +65,7 @@ export function SectionHeader({
   return (
     <div>
       <p className="text-xs font-mono text-accent-cyan uppercase tracking-widest mb-2">
-        // {subtitle}
+        {'// '}{subtitle}
       </p>
       <h2 className="text-3xl sm:text-4xl font-extrabold text-text-primary section-heading">
         {title}

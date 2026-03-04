@@ -9,7 +9,7 @@ export default function Footer() {
       <section id="contact" className="py-14 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <p className="text-xs font-mono text-accent-cyan uppercase tracking-widest mb-3">
-            // Let&apos;s connect
+            {'// '}Let&apos;s connect
           </p>
           <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
             <span className="text-gradient">Get In Touch</span>
