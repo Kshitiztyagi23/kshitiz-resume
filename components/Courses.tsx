@@ -2,53 +2,64 @@
 
 import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
-import { SectionHeader } from './Education'
-import { AnimatedHeader, StaggerList, StaggerItem } from './animations'
+import { BookMarked, Sparkles } from 'lucide-react'
 
 const { courses } = resumeData
 
 export default function Courses() {
   return (
-    <section className="py-14 px-6">
-      <div className="max-w-4xl mx-auto">
-        <AnimatedHeader>
-          <SectionHeader title="Relevant Courses" subtitle="Formal coursework" />
-        </AnimatedHeader>
+    <section className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
+          <BookMarked className="w-4 h-4" />
+          <span>Curriculum & Academics</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
+          Relevant Coursework
+        </h2>
+        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
+          Core subjects completed at IIT Kanpur and specialized machine learning credentials.
+        </p>
 
-        <StaggerList className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+        {/* Courses Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
           {courses.map((course, i) => (
-            <StaggerItem key={i} variant="scaleIn">
-              <motion.div
-                className="flex items-center justify-between gap-3 px-4 py-3 rounded-xl border border-dark-border bg-dark-card group cursor-default"
-                whileHover={{ borderColor: 'rgba(0,212,255,0.3)', backgroundColor: 'rgba(0,212,255,0.03)', y: -2 }}
-                transition={{ duration: 0.2 }}
-              >
-                <span className="text-sm text-text-secondary group-hover:text-text-primary transition-colors duration-200">
+            <motion.div
+              key={course.name}
+              className="flex items-center justify-between gap-2 p-3.5 rounded-lg border border-zinc-200 bg-white hover:border-orange-300 hover:bg-orange-50/20 transition-all duration-150 shadow-2xs"
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.03, duration: 0.25 }}
+            >
+              <div className="flex flex-col">
+                <span className="text-xs font-semibold text-zinc-900 leading-snug">
                   {course.name}
                 </span>
-                {course.tag && (
-                  <span
-                    className={`shrink-0 tag text-[10px] ${
-                      course.tag === 'Excellent' ? 'tag-green'
-                      : course.tag === 'B+' ? 'tag-cyan'
-                      : course.tag === 'A' ? 'tag-orange'
-                      : 'tag-purple'
-                    }`}
-                  >
-                    {course.tag === 'Excellent' ? 'A' : course.tag === 'Online' ? 'Online' : course.tag}
-                  </span>
-                )}
-              </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerList>
+                <span className="text-[10px] font-mono text-zinc-400">
+                  {course.category}
+                </span>
+              </div>
 
-        <p className="text-xs text-text-muted mt-4 font-mono">
-          <span className="text-accent-green">A</span> = Excellent &nbsp;·&nbsp;
-          <span className="text-accent-cyan">B+</span> = Very Good &nbsp;·&nbsp;
-          <span className="text-accent-purple">Online</span> = Coursera / deeplearning.ai
-        </p>
+              {course.tag && (
+                <span
+                  className={`shrink-0 px-2 py-0.5 rounded text-[10px] font-mono font-medium ${
+                    course.tag === 'Excellent Grade'
+                      ? 'bg-orange-50 text-orange-700 border border-orange-200'
+                      : course.tag === 'Online Specialized'
+                      ? 'bg-zinc-100 text-zinc-600 border border-zinc-200'
+                      : 'bg-zinc-50 text-zinc-600 border border-zinc-200'
+                  }`}
+                >
+                  {course.tag}
+                </span>
+              )}
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
+

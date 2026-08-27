@@ -1,14 +1,37 @@
 import type { Metadata } from 'next'
+import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
-import NeuralBackground from '@/components/NeuralBackground'
+
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+  display: 'swap',
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
-  title: 'Kshitiz Tyagi | Portfolio',
-  description: 'B.Tech student at IIT Kanpur specializing in Machine Learning, AI, and Bioengineering.',
-  keywords: ['Kshitiz Tyagi', 'IIT Kanpur', 'Machine Learning', 'AI', 'Bioengineering', 'Portfolio'],
+  title: 'Kshitiz Tyagi | AI/ML Engineer & Researcher · IIT Kanpur',
+  description:
+    'Fourth-year undergraduate at IIT Kanpur specializing in AI/ML systems, self-healing RAG pipelines, and neuro-computational modeling. First author at CogSci 2026.',
+  keywords: [
+    'Kshitiz Tyagi',
+    'IIT Kanpur',
+    'Machine Learning',
+    'AI Systems',
+    'CogSci 2026',
+    'Battery Smart',
+    'Skaeo',
+    'Bioengineering',
+    'Portfolio',
+  ],
   openGraph: {
-    title: 'Kshitiz Tyagi | Portfolio',
-    description: 'B.Tech student at IIT Kanpur – ML Engineer & Researcher',
+    title: 'Kshitiz Tyagi | AI/ML Engineer & Researcher',
+    description: 'B.Tech at IIT Kanpur · First Author CogSci 2026 · Ex-Battery Smart & Skaeo',
     type: 'website',
   },
 }
@@ -19,21 +42,13 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
-          rel="stylesheet"
-        />
-      </head>
-      <body className="bg-dark-bg text-text-primary antialiased">
-        <NeuralBackground />
-        <div className="relative z-10">
+    <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
+      <body className="bg-white text-zinc-900 antialiased font-sans selection:bg-orange-100 selection:text-orange-900">
+        <div className="relative min-h-screen bg-white">
           {children}
         </div>
       </body>
     </html>
   )
 }
+

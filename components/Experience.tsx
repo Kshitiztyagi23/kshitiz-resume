@@ -2,96 +2,146 @@
 
 import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
-import { SectionHeader } from './Education'
-import { AnimatedHeader, StaggerList, StaggerItem } from './animations'
+import { Briefcase, Building2, Calendar, CheckCircle2, Cpu, Zap, ChevronRight } from 'lucide-react'
 
 const { experience } = resumeData
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-14 px-6">
-      <div className="max-w-4xl mx-auto">
-        <AnimatedHeader>
-          <SectionHeader title="Work Experience" subtitle="Professional journey" />
-        </AnimatedHeader>
+    <section id="experience" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
+          <Briefcase className="w-4 h-4" />
+          <span>Work Experience & Production AI</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
+          Engineering & Applied AI Internships
+        </h2>
+        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
+          Designing self-healing RAG pipelines, meeting extraction graphs, computer vision bias fixes, and low-latency inference in production.
+        </p>
 
-        <StaggerList className="mt-12 space-y-6">
-          {experience.map((job, i) => (
-            <StaggerItem key={i}>
-              <motion.div
-                className="relative p-7 rounded-2xl border border-dark-border bg-dark-card overflow-hidden group"
-                whileHover={{ y: -4, borderColor: 'rgba(0,212,255,0.3)', boxShadow: '0 8px 40px rgba(0,212,255,0.15)' }}
-                transition={{ duration: 0.25 }}
-              >
-                {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-accent-cyan/3 to-accent-purple/3 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                <div className="relative z-10">
-                  {/* Header */}
-                  <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-5">
-                    <div>
-                      <h3 className="text-lg font-bold text-text-primary">{job.role}</h3>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-accent-cyan font-semibold text-sm">@ {job.company}</span>
-                      </div>
+        {/* Experience Cards */}
+        <div className="space-y-8">
+          {experience.map((job, index) => (
+            <motion.div
+              key={job.company}
+              className="bg-white rounded-xl border border-zinc-200 shadow-xs hover:border-orange-300 transition-all duration-200 overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: index * 0.1 }}
+            >
+              <div className="p-6 sm:p-8">
+                {/* Header Row */}
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-5 border-b border-zinc-100">
+                  <div>
+                    <h3 className="text-xl font-bold text-zinc-950 tracking-tight flex items-center gap-2">
+                      {job.role}
+                    </h3>
+                    <div className="flex items-center gap-2 mt-1 font-mono text-xs text-zinc-600">
+                      <span className="font-semibold text-safety-600 flex items-center gap-1">
+                        <Building2 className="w-3.5 h-3.5" />
+                        {job.company}
+                      </span>
+                      <span>·</span>
+                      <span>{job.location}</span>
                     </div>
-                    <span className="shrink-0 tag tag-cyan font-mono text-xs">{job.period}</span>
                   </div>
 
-                  {/* Objective */}
-                  <p className="text-sm text-text-muted italic border-l-2 border-accent-cyan/40 pl-3 mb-5 leading-relaxed">
-                    {job.objective}
-                  </p>
-
-                  {/* Bullets */}
-                  <ul className="space-y-2.5 mb-5">
-                    {job.bullets.map((b, j) => (
-                      <motion.li
-                        key={j}
-                        className="flex gap-3 text-sm text-text-secondary leading-relaxed"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: j * 0.08 + 0.2, duration: 0.4 }}
-                      >
-                        <span className="shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full bg-accent-cyan" />
-                        {b}
-                      </motion.li>
-                    ))}
-                  </ul>
-
-                  {/* Results */}
-                  <div className="p-4 rounded-xl bg-accent-green/5 border border-accent-green/15">
-                    <p className="text-xs font-semibold text-accent-green uppercase tracking-wider mb-2">
-                      Results
-                    </p>
-                    {job.results.map((r, j) => (
-                      <p key={j} className="text-sm text-text-secondary flex gap-2">
-                        <span className="text-accent-green">✓</span>
-                        {r}
-                      </p>
-                    ))}
+                  <div className="flex items-center gap-2">
+                    <span className="badge-safety">
+                      <Calendar className="w-3 h-3" />
+                      {job.period}
+                    </span>
                   </div>
+                </div>
 
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mt-5">
-                    {job.tags.map((tag) => (
-                      <motion.span
-                        key={tag}
-                        className="tag tag-cyan text-xs"
-                        whileHover={{ scale: 1.1 }}
-                        transition={{ duration: 0.15 }}
+                {/* Objective */}
+                <div className="my-5 p-3.5 rounded-lg bg-zinc-50 border border-zinc-200/80 text-xs sm:text-sm text-zinc-700 leading-relaxed font-sans">
+                  <strong className="text-zinc-900 font-semibold font-mono text-xs uppercase block mb-1">
+                    System Objective:
+                  </strong>
+                  {job.objective}
+                </div>
+
+                {/* High-Impact Engineering Modules */}
+                <div className="space-y-4 mb-6">
+                  <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider font-mono">
+                    Architectural Contributions & Breakthroughs:
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                    {job.highlights.map((item, hIndex) => (
+                      <div
+                        key={hIndex}
+                        className="p-4 rounded-lg border border-zinc-200 bg-white hover:border-orange-200 transition-colors shadow-2xs"
                       >
-                        {tag}
-                      </motion.span>
+                        <div className="flex items-start justify-between gap-2 mb-2">
+                          <h5 className="text-xs font-bold text-zinc-900 font-mono tracking-tight flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-safety-500 shrink-0" />
+                            {item.title}
+                          </h5>
+                        </div>
+                        <p className="text-xs text-zinc-600 leading-relaxed mb-3">
+                          {item.description}
+                        </p>
+                        {item.metrics && (
+                          <div className="text-[11px] font-mono font-semibold text-safety-700 bg-orange-50 px-2 py-1 rounded border border-orange-200/60 mb-2">
+                            ⚡ {item.metrics}
+                          </div>
+                        )}
+                        {item.tags && (
+                          <div className="flex flex-wrap gap-1">
+                            {item.tags.map((t) => (
+                              <span
+                                key={t}
+                                className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-zinc-100 text-zinc-600"
+                              >
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
-              </motion.div>
-            </StaggerItem>
+
+                {/* Quantified Production Results */}
+                <div className="p-4 rounded-lg bg-orange-50/50 border border-orange-200/80 mb-5">
+                  <div className="text-xs font-semibold text-orange-950 uppercase tracking-wider font-mono mb-2 flex items-center gap-1.5">
+                    <Zap className="w-3.5 h-3.5 text-safety-500" />
+                    <span>Key Production Results & Quantified Impact:</span>
+                  </div>
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-zinc-800">
+                    {job.resultsSummary.map((res, rIndex) => (
+                      <li key={rIndex} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-3.5 h-3.5 text-safety-600 shrink-0 mt-0.5" />
+                        <span>{res}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Tech Stack Chips */}
+                <div className="flex flex-wrap items-center gap-1.5 pt-4 border-t border-zinc-100">
+                  <span className="text-xs font-mono text-zinc-400 mr-2">Stack:</span>
+                  {job.stack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-zinc-100 text-zinc-700 border border-zinc-200 font-medium"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </StaggerList>
+        </div>
       </div>
     </section>
   )
 }
+

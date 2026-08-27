@@ -2,74 +2,70 @@
 
 import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
-import { AnimatedHeader, StaggerList, StaggerItem } from './animations'
+import { GraduationCap, Calendar, Award } from 'lucide-react'
 
 const { education } = resumeData
 
 export default function Education() {
   return (
-    <section id="education" className="pt-10 pb-14 px-6">
-      <div className="max-w-4xl mx-auto">
-        <AnimatedHeader>
-          <SectionHeader title="Academic Qualifications" subtitle="My educational journey" />
-        </AnimatedHeader>
+    <section id="education" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
+          <GraduationCap className="w-4 h-4" />
+          <span>Academic Background</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
+          Academic Qualifications
+        </h2>
+        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
+          Indian Institute of Technology, Kanpur and senior secondary scholastic records.
+        </p>
 
-        <StaggerList className="mt-12 space-y-4">
-          {education.map((edu, i) => (
-            <StaggerItem key={i}>
-              <motion.div
-                className="group relative p-6 rounded-2xl border border-dark-border bg-dark-card card-hover"
-                whileHover={{ y: -4, borderColor: 'rgba(0,212,255,0.3)', boxShadow: '0 8px 40px rgba(0,212,255,0.12)' }}
-                transition={{ duration: 0.25 }}
-              >
-                {/* Left accent bar */}
-                <div className="absolute left-0 top-6 bottom-6 w-0.5 bg-gradient-to-b from-accent-cyan to-accent-purple rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-                  {/* Year badge */}
-                  <div className="shrink-0">
-                    <span className="tag tag-cyan font-mono text-xs">{edu.year}</span>
+        {/* Education Timeline / Cards */}
+        <div className="space-y-4">
+          {education.map((edu, index) => (
+            <motion.div
+              key={edu.degree}
+              className="p-5 sm:p-6 rounded-xl border border-zinc-200 bg-white hover:border-orange-300 transition-all duration-200 interactive-card shadow-xs"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.35, delay: index * 0.08 }}
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-3.5">
+                  <div className="p-2.5 rounded-lg bg-orange-50 text-safety-600 border border-orange-200/70 shrink-0">
+                    <GraduationCap className="w-5 h-5" />
                   </div>
-
-                  {/* Info */}
-                  <div className="flex-1">
-                    <div className="flex flex-wrap items-baseline gap-2">
-                      <h3 className="text-base font-bold text-text-primary">{edu.degree}</h3>
-                      <span className="text-text-muted text-sm">&bull;</span>
-                      <span className="text-sm text-text-secondary">{edu.institute}</span>
+                  <div>
+                    <h3 className="text-base sm:text-lg font-bold text-zinc-950 tracking-tight">
+                      {edu.degree}
+                    </h3>
+                    <div className="text-xs sm:text-sm text-zinc-600 font-mono mt-0.5">
+                      {edu.institute}
                     </div>
-                    <p className="text-xs text-text-muted mt-1">{edu.type}</p>
-                  </div>
-
-                  {/* Score */}
-                  <div className="shrink-0 text-right">
-                    <div className="text-xl font-extrabold text-gradient">{edu.score}</div>
+                    <div className="text-xs text-zinc-400 mt-1 font-sans">
+                      {edu.type}
+                    </div>
                   </div>
                 </div>
-              </motion.div>
-            </StaggerItem>
+
+                <div className="flex sm:flex-col items-center sm:items-end justify-between gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-zinc-100">
+                  <span className="badge-safety">
+                    <Calendar className="w-3 h-3" />
+                    {edu.year}
+                  </span>
+                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-950 bg-zinc-50 px-2.5 py-1 rounded border border-zinc-200/80">
+                    {edu.score}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           ))}
-        </StaggerList>
+        </div>
       </div>
     </section>
   )
 }
 
-export function SectionHeader({
-  title,
-  subtitle,
-}: {
-  title: string
-  subtitle: string
-}) {
-  return (
-    <div>
-      <p className="text-xs font-mono text-accent-cyan uppercase tracking-widest mb-2">
-        {'// '}{subtitle}
-      </p>
-      <h2 className="text-3xl sm:text-4xl font-extrabold text-text-primary section-heading">
-        {title}
-      </h2>
-    </div>
-  )
-}

@@ -2,67 +2,91 @@
 
 import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
-import { SectionHeader } from './Education'
-import { AnimatedHeader, StaggerList, StaggerItem } from './animations'
+import { Wrench, Code2, Brain, BarChart3, Cloud, Database } from 'lucide-react'
 
 const { skills } = resumeData
 
-const categoryIcons: Record<string, string> = {
-  Languages: '{ }',
-  Frameworks: '⚙️',
-  Libraries: '📦',
-  Tools: '🛠',
-}
-
-const categoryColors: Record<string, string> = {
-  Languages: 'tag-cyan',
-  Frameworks: 'tag-purple',
-  Libraries: 'tag-green',
-  Tools: 'tag-orange',
+const categoryMeta: Record<string, { icon: any; description: string }> = {
+  'Languages': {
+    icon: Code2,
+    description: 'Core programming languages for ML, systems, and algorithms',
+  },
+  'AI, ML & Deep Learning': {
+    icon: Brain,
+    description: 'Neural networks, computer vision, NLP, and agentic workflows',
+  },
+  'Data Science & Signal Processing': {
+    icon: BarChart3,
+    description: 'Statistical analysis, biosignal processing, and visual analytics',
+  },
+  'Platforms & Cloud Infrastructure': {
+    icon: Cloud,
+    description: 'Cloud deployment, containers, databases, and monitoring',
+  },
 }
 
 export default function Skills() {
   return (
-    <section id="skills" className="py-14 px-6">
-      <div className="max-w-4xl mx-auto">
-        <AnimatedHeader>
-          <SectionHeader title="Technical Skills" subtitle="Tools & technologies" />
-        </AnimatedHeader>
+    <section id="skills" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
+          <Wrench className="w-4 h-4" />
+          <span>Technical Capabilities</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
+          Skills & Technical Matrix
+        </h2>
+        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
+          Core toolkits, frameworks, and infrastructure utilized in production and scientific research.
+        </p>
 
-        <StaggerList className="mt-12 grid sm:grid-cols-2 gap-5">
-          {Object.entries(skills).map(([category, items]) => (
-            <StaggerItem key={category}>
+        {/* Skills Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {Object.entries(skills).map(([category, items], index) => {
+            const meta = categoryMeta[category] || { icon: Database, description: '' }
+            const Icon = meta.icon
+
+            return (
               <motion.div
-                className="p-6 rounded-2xl border border-dark-border bg-dark-card h-full"
-                whileHover={{ y: -4, borderColor: 'rgba(0,212,255,0.25)', boxShadow: '0 8px 32px rgba(0,0,0,0.3)' }}
-                transition={{ duration: 0.25 }}
+                key={category}
+                className="p-6 rounded-xl border border-zinc-200 bg-white hover:border-orange-300 transition-all duration-200 interactive-card shadow-xs"
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, delay: index * 0.08 }}
               >
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="text-lg">{categoryIcons[category]}</span>
-                  <h3 className="text-sm font-bold text-text-primary uppercase tracking-wider">
-                    {category}
-                  </h3>
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="p-2 rounded-lg bg-orange-50 text-safety-600 border border-orange-200/70">
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-bold text-zinc-950 tracking-tight font-mono">
+                      {category}
+                    </h3>
+                  </div>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {items.map((skill, idx) => (
-                    <motion.span
+
+                <p className="text-xs text-zinc-500 mb-4 font-sans">
+                  {meta.description}
+                </p>
+
+                <div className="flex flex-wrap gap-1.5">
+                  {items.map((skill) => (
+                    <span
                       key={skill}
-                      className={`tag ${categoryColors[category] ?? 'tag-cyan'} text-xs cursor-default`}
-                      initial={{ opacity: 0, scale: 0.7 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: idx * 0.04, duration: 0.3, ease: 'easeOut' }}
-                      whileHover={{ scale: 1.15, y: -2 }}
+                      className="px-2.5 py-1 rounded-md text-xs font-mono bg-zinc-50 text-zinc-800 border border-zinc-200/80 hover:border-orange-300 hover:text-safety-700 hover:bg-orange-50/50 transition-colors"
                     >
                       {skill}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
               </motion.div>
-            </StaggerItem>
-          ))}
-        </StaggerList>
+            )
+          })}
+        </div>
       </div>
     </section>
   )
 }
+

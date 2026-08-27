@@ -1,89 +1,106 @@
+'use client'
+
+import { useState } from 'react'
 import { resumeData } from '@/lib/data'
+import { Mail, Copy, Check, ArrowUpRight, Heart } from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from '@/components/Icons'
 
 const { personal } = resumeData
 
 export default function Footer() {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personal.email)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <>
       {/* Contact Section */}
-      <section id="contact" className="py-14 px-6">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="text-xs font-mono text-accent-cyan uppercase tracking-widest mb-3">
-            {'// '}Let&apos;s connect
-          </p>
-          <h2 className="text-4xl sm:text-5xl font-extrabold mb-4">
-            <span className="text-gradient">Get In Touch</span>
+      <section id="contact" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-orange-50 text-orange-800 border border-orange-200 mb-4">
+            <span className="w-1.5 h-1.5 rounded-full bg-safety-500" />
+            Let&apos;s Connect
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight mb-4">
+            Interested in Collaborating?
           </h2>
-          <p className="text-text-secondary max-w-xl mx-auto mb-10 leading-relaxed">
-            I&apos;m currently open to internship opportunities, research collaborations, and
-            interesting projects at the intersection of AI, neuroscience, and bioengineering.
+          <p className="text-zinc-600 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed font-sans">
+            I am actively looking for impactful AI/ML engineering roles, research attachments, and systems projects. Feel free to reach out via email or connect on social platforms.
           </p>
 
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
             <a
               href={`mailto:${personal.email}`}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-accent-cyan to-accent-purple text-dark-bg font-bold text-sm hover:opacity-90 hover:scale-105 transition-all duration-300 shadow-glow-cyan"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-safety-500 hover:bg-safety-600 text-white font-semibold text-sm shadow-sm transition-all hover:shadow-orange-glow"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
-              {personal.email}
+              <Mail className="w-4 h-4" />
+              <span>Send Email</span>
             </a>
+
+            <button
+              onClick={handleCopyEmail}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 text-sm font-mono shadow-xs transition-colors"
+            >
+              {copied ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-600" />
+                  <span className="text-emerald-700">Copied {personal.email}</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="w-4 h-4 text-zinc-400" />
+                  <span>{personal.email}</span>
+                </>
+              )}
+            </button>
 
             <a
               href={personal.githubUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-dark-border bg-dark-card text-text-primary text-sm hover:border-accent-cyan/40 hover:text-accent-cyan transition-all duration-300"
+              className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 text-sm font-mono shadow-xs transition-colors"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-              </svg>
-              @{personal.github}
+              <GithubIcon className="w-4 h-4 text-zinc-600" />
+              <span>GitHub</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
             </a>
 
             <a
               href={personal.linkedinUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-dark-border bg-dark-card text-text-primary text-sm hover:border-accent-purple/40 hover:text-accent-purple transition-all duration-300"
+              className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 text-sm font-mono shadow-xs transition-colors"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-              </svg>
-              LinkedIn
+              <LinkedinIcon className="w-4 h-4 text-blue-600" />
+              <span>LinkedIn</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
             </a>
-
-            {/* <a
-              href={`tel:${personal.phone}`}
-              className="flex items-center gap-2 px-6 py-3.5 rounded-xl border border-dark-border bg-dark-card text-text-primary text-sm hover:border-accent-green/40 hover:text-accent-green transition-all duration-300"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14.92z" />
-              </svg>
-              {personal.phone}
-            </a> */}
           </div>
-
-          {/* Divider */}
-          <div className="h-px bg-gradient-to-r from-transparent via-dark-border to-transparent mb-8" />
         </div>
       </section>
 
-      {/* Footer bar */}
-      <footer className="pb-8 px-6">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-text-muted font-mono">
-            © {new Date().getFullYear()} {personal.name} · Built with{' '}
-            <span className="text-accent-cyan">Next.js</span> &{' '}
-            <span className="text-accent-purple">Tailwind CSS</span>
-          </p>
-          <p className="text-xs text-text-muted font-mono">
-            IIT Kanpur · BSBE · Batch &apos;27
-          </p>
+      {/* Footer Bar */}
+      <footer className="py-8 bg-zinc-50 px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-mono">
+          <div>
+            © {new Date().getFullYear()} {personal.name} · Department of BSBE, IIT Kanpur
+          </div>
+          <div className="flex items-center gap-1 text-zinc-600">
+            <span>Built with</span>
+            <span className="font-semibold text-zinc-900">Next.js 15</span>
+            <span>·</span>
+            <span className="font-semibold text-safety-600">Safety Orange</span>
+            <span>&</span>
+            <span className="font-semibold text-zinc-900">Tailwind</span>
+          </div>
         </div>
       </footer>
     </>
   )
 }
+

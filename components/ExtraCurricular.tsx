@@ -2,40 +2,49 @@
 
 import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
-import { SectionHeader } from './Education'
-import { AnimatedHeader, StaggerList, StaggerItem } from './animations'
+import { Activity } from 'lucide-react'
 
 const { extracurricular } = resumeData
 
 export default function ExtraCurricular() {
   return (
-    <section className="py-14 px-6 bg-dark-card/30">
-      <div className="max-w-4xl mx-auto">
-        <AnimatedHeader>
-          <SectionHeader title="Extra-Curricular" subtitle="Beyond academics" />
-        </AnimatedHeader>
+    <section className="py-20 md:py-24 bg-zinc-50/50 border-b border-zinc-200/80">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Section Header */}
+        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
+          <Activity className="w-4 h-4" />
+          <span>Extracurricular Endeavors</span>
+        </div>
+        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
+          Cultural & Campus Activities
+        </h2>
+        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
+          Competitive cultural events, community blood drives, and technical championships at IIT Kanpur.
+        </p>
 
-        <StaggerList className="mt-12 flex flex-col gap-4">
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {extracurricular.map((item, i) => (
-            <StaggerItem key={i}>
-              <motion.div
-                className="flex gap-4 p-5 rounded-2xl border border-dark-border bg-dark-card"
-                whileHover={{ y: -3, borderColor: 'rgba(0,212,255,0.25)', boxShadow: '0 6px 30px rgba(0,0,0,0.25)' }}
-                transition={{ duration: 0.2 }}
-              >
-                <motion.div
-                  className="shrink-0 w-10 h-10 rounded-xl bg-dark-bg flex items-center justify-center text-xl"
-                  whileHover={{ scale: 1.15, rotate: 8 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {item.icon}
-                </motion.div>
-                <p className="text-sm text-text-secondary leading-relaxed self-center">{item.text}</p>
-              </motion.div>
-            </StaggerItem>
+            <motion.div
+              key={i}
+              className="p-5 rounded-xl border border-zinc-200 bg-white hover:border-orange-300 transition-all duration-200 interactive-card shadow-xs"
+              initial={{ opacity: 0, y: 15 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.08, duration: 0.35 }}
+            >
+              <div className="text-2xl mb-3">{item.icon}</div>
+              <h3 className="text-sm font-bold text-zinc-950 tracking-tight mb-1">
+                {item.title}
+              </h3>
+              <p className="text-xs text-zinc-600 leading-relaxed font-sans">
+                {item.description}
+              </p>
+            </motion.div>
           ))}
-        </StaggerList>
+        </div>
       </div>
     </section>
   )
 }
+

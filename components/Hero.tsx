@@ -1,150 +1,180 @@
 'use client'
 
-import { motion, type Transition } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
+import { 
+  ArrowDown, 
+  Copy, 
+  Check, 
+  Mail, 
+  Sparkles, 
+  GraduationCap, 
+  BookOpen, 
+  Cpu, 
+  Award 
+} from 'lucide-react'
+import { GithubIcon, LinkedinIcon } from '@/components/Icons'
 
-const { personal } = resumeData
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.65, ease: 'easeOut', delay } as Transition,
-})
+const { personal, metrics } = resumeData
 
 export default function Hero() {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText(personal.email)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
   return (
     <section
       id="about"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden hero-grid"
+      className="relative pt-28 pb-20 md:pt-36 md:pb-28 overflow-hidden bg-white bg-grid-pattern border-b border-zinc-200/80"
     >
-      {/* Glow orbs */}
-      <motion.div
-        className="glow-orb w-96 h-96 bg-accent-cyan/20 top-10 -left-32"
-        animate={{ y: [0, -18, 0] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <motion.div
-        className="glow-orb w-80 h-80 bg-accent-purple/20 bottom-20 -right-24"
-        animate={{ y: [0, -14, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut', delay: 2 }}
-      />
-      <motion.div
-        className="glow-orb w-64 h-64 bg-accent-green/10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-        animate={{ y: [0, -10, 0] }}
-        transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut', delay: 4 }}
-      />
+      {/* Subtle Warm Radial Glow Accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-80 bg-gradient-to-b from-orange-500/10 via-orange-500/5 to-transparent blur-3xl pointer-events-none -z-0" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-        {/* Badge */}
+      <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-6">
+        {/* Availability / Status Chip */}
         <motion.div
-          className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-accent-cyan/30 bg-accent-cyan/5 text-accent-cyan text-xs font-mono font-medium mb-8"
-          initial={{ opacity: 0, scale: 0.85 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
+          className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-orange-200 bg-orange-50/80 text-orange-900 text-xs font-mono mb-6 shadow-xs"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
         >
-          <span className="w-2 h-2 rounded-full bg-accent-green animate-pulse" />
-          Available for Opportunities
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-safety-500 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-safety-500" />
+          </span>
+          <span className="font-semibold text-zinc-900">{personal.status}</span>
         </motion.div>
 
-        {/* Name */}
-        <motion.h1
-          className="text-5xl sm:text-7xl font-extrabold mb-4 tracking-tight"
-          {...fadeUp(0.1)}
-        >
-          <span className="text-gradient">{personal.name}</span>
-        </motion.h1>
+        {/* Main Hero Header */}
+        <div className="max-w-3xl mb-8">
+          <motion.h1
+            className="text-4xl sm:text-6xl font-extrabold text-zinc-950 tracking-tight leading-[1.1] mb-5"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Engineering <span className="text-safety-500">Intelligent Systems</span> & Cognitive AI Architectures.
+          </motion.h1>
 
-        {/* Title */}
-        <motion.p
-          className="text-lg sm:text-xl text-text-secondary font-medium mb-2"
-          {...fadeUp(0.2)}
-        >
-          {personal.subtitle}
-        </motion.p>
+          <motion.p
+            className="text-base sm:text-lg text-zinc-600 leading-relaxed font-normal"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            Hi, I&apos;m <strong className="text-zinc-900 font-semibold">{personal.name}</strong> — a fourth-year undergraduate at{' '}
+            <strong className="text-zinc-900 font-semibold">IIT Kanpur</strong> specializing in AI/ML systems, self-healing RAG pipelines, and neuro-computational modeling. First author at{' '}
+            <span className="inline-block font-mono text-xs px-2 py-0.5 rounded bg-orange-100/70 text-orange-800 border border-orange-200 font-semibold">
+              CogSci 2026
+            </span>{' '}
+            with full-stack production engineering experience at Battery Smart and Skaeo.
+          </motion.p>
+        </div>
 
-        {/* Tagline */}
-        <motion.p
-          className="text-sm sm:text-base text-text-muted max-w-xl mx-auto mb-10 leading-relaxed"
-          {...fadeUp(0.3)}
-        >
-          {personal.tagline}
-        </motion.p>
-
-        {/* CTA Buttons */}
+        {/* Action Buttons */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-4 mb-14"
-          {...fadeUp(0.4)}
+          className="flex flex-wrap items-center gap-3 mb-12"
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
-          <motion.a
-            href={personal.githubUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary hover:border-accent-cyan/40 hover:bg-accent-cyan/5 hover:text-accent-cyan transition-all duration-300 text-sm font-medium"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.97 }}
+          <a
+            href="#experience"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-safety-500 hover:bg-safety-600 text-white font-medium text-sm shadow-sm transition-all hover:shadow-orange-glow"
           >
-            <GithubIcon />
-            GitHub
-          </motion.a>
-          <motion.a
-            href={personal.linkedinUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-text-primary hover:border-accent-purple/40 hover:bg-accent-purple/5 hover:text-accent-purple transition-all duration-300 text-sm font-medium"
-            whileHover={{ scale: 1.05, y: -2 }}
-            whileTap={{ scale: 0.97 }}
+            <span>Explore Experience & Research</span>
+            <ArrowDown className="w-4 h-4" />
+          </a>
+
+          <button
+            onClick={handleCopyEmail}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 font-medium text-sm shadow-xs transition-colors"
           >
-            <LinkedinIcon />
-            LinkedIn
-          </motion.a>
-          <motion.a
-            href={`mailto:${personal.email}`}
-            className="flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-accent-cyan to-accent-purple text-dark-bg font-semibold hover:opacity-90 transition-all duration-300 text-sm shadow-glow-cyan"
-            whileHover={{ scale: 1.07, y: -2 }}
-            whileTap={{ scale: 0.97 }}
-          >
-            <MailIcon />
-            Get in Touch
-          </motion.a>
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span className="text-emerald-700 font-mono text-xs">Copied to clipboard!</span>
+              </>
+            ) : (
+              <>
+                <Copy className="w-4 h-4 text-zinc-500" />
+                <span>{personal.email}</span>
+              </>
+            )}
+          </button>
+
+          <div className="flex items-center gap-2 pl-2">
+            <a
+              href={personal.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 hover:text-safety-600 hover:border-orange-300 transition-colors shadow-xs"
+              aria-label="GitHub Profile"
+            >
+              <GithubIcon className="w-4 h-4" />
+            </a>
+            <a
+              href={personal.linkedinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 hover:text-safety-600 hover:border-orange-300 transition-colors shadow-xs"
+              aria-label="LinkedIn Profile"
+            >
+              <LinkedinIcon className="w-4 h-4" />
+            </a>
+          </div>
         </motion.div>
 
+        {/* Live Metrics Bento Grid */}
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          {metrics.map((item, index) => {
+            const icons = [GraduationCap, BookOpen, Cpu, Award]
+            const Icon = icons[index] || Sparkles
+            return (
+              <div
+                key={item.label}
+                className={`p-4 rounded-xl border bg-white transition-all duration-200 interactive-card ${
+                  item.highlight
+                    ? 'border-orange-200 shadow-xs'
+                    : 'border-zinc-200/90 shadow-xs'
+                }`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-xs font-medium text-zinc-500 uppercase tracking-wider font-mono">
+                    {item.label}
+                  </span>
+                  <div
+                    className={`p-1.5 rounded-md ${
+                      item.highlight
+                        ? 'bg-orange-50 text-safety-600'
+                        : 'bg-zinc-100 text-zinc-600'
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                  </div>
+                </div>
+                <div className="text-xl sm:text-2xl font-bold font-mono tracking-tight text-zinc-950">
+                  {item.value}
+                </div>
+                <div className="text-xs text-zinc-500 mt-1 font-medium">
+                  {item.subtext}
+                </div>
+              </div>
+            )
+          })}
+        </motion.div>
       </div>
-
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40"
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <span className="text-xs text-text-muted font-mono tracking-widest uppercase">Scroll</span>
-        <div className="w-0.5 h-8 bg-gradient-to-b from-accent-cyan to-transparent" />
-      </motion.div>
     </section>
   )
 }
 
-function GithubIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-    </svg>
-  )
-}
-
-function LinkedinIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
-    </svg>
-  )
-}
-
-function MailIcon() {
-  return (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-      <polyline points="22,6 12,13 2,6" />
-    </svg>
-  )
-}
