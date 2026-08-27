@@ -10,9 +10,9 @@ import {
   Mail, 
   Sparkles, 
   GraduationCap, 
-  BookOpen, 
+  Zap, 
   Cpu, 
-  Award 
+  Database 
 } from 'lucide-react'
 import { GithubIcon, LinkedinIcon } from '@/components/Icons'
 
@@ -58,7 +58,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            Engineering <span className="text-safety-500">Intelligent Systems</span> & Cognitive AI Architectures.
+            Engineering <span className="text-safety-500">Scalable Systems</span>, Applied Machine Learning & Analytics.
           </motion.h1>
 
           <motion.p
@@ -67,12 +67,17 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Hi, I&apos;m <strong className="text-zinc-900 font-semibold">{personal.name}</strong> — a fourth-year undergraduate at{' '}
-            <strong className="text-zinc-900 font-semibold">IIT Kanpur</strong> specializing in AI/ML systems, self-healing RAG pipelines, and neuro-computational modeling. First author at{' '}
+            Hi, I&apos;m <strong className="text-zinc-900 font-semibold">{personal.name}</strong>, an{' '}
+            <strong className="text-zinc-900 font-semibold">Academic Excellence Award</strong> recipient and fourth-year undergraduate at{' '}
+            <strong className="text-zinc-900 font-semibold">IIT Kanpur</strong> with hands-on internship experience engineering production{' '}
+            <strong className="text-zinc-900 font-semibold">AI systems</strong>,{' '}
+            <strong className="text-zinc-900 font-semibold">data pipelines</strong>, and{' '}
+            <strong className="text-zinc-900 font-semibold">analytics infrastructure</strong> at{' '}
+            <strong className="text-zinc-900 font-semibold">Battery Smart</strong> and{' '}
+            <strong className="text-zinc-900 font-semibold">Skaeo</strong>. Published first-author researcher at{' '}
             <span className="inline-block font-mono text-xs px-2 py-0.5 rounded bg-orange-100/70 text-orange-800 border border-orange-200 font-semibold">
               CogSci 2026
-            </span>{' '}
-            with full-stack production engineering experience at Battery Smart and Skaeo.
+            </span>.
           </motion.p>
         </div>
 
@@ -87,7 +92,7 @@ export default function Hero() {
             href="#experience"
             className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-safety-500 hover:bg-safety-600 text-white font-medium text-sm shadow-sm transition-all hover:shadow-orange-glow"
           >
-            <span>Explore Experience & Research</span>
+            <span>Explore Experience & Projects</span>
             <ArrowDown className="w-4 h-4" />
           </a>
 
@@ -138,7 +143,7 @@ export default function Hero() {
           transition={{ duration: 0.5, delay: 0.4 }}
         >
           {metrics.map((item, index) => {
-            const icons = [GraduationCap, BookOpen, Cpu, Award]
+            const icons = [GraduationCap, Zap, Cpu, Database]
             const Icon = icons[index] || Sparkles
             return (
               <div
@@ -163,10 +168,10 @@ export default function Hero() {
                     <Icon className="w-3.5 h-3.5" />
                   </div>
                 </div>
-                <div className="text-xl sm:text-2xl font-bold font-mono tracking-tight text-zinc-950">
+                <div className="text-lg sm:text-xl font-bold font-mono tracking-tight text-zinc-950">
                   {item.value}
                 </div>
-                <div className="text-xs text-zinc-500 mt-1 font-medium">
+                <div className="text-xs text-zinc-500 mt-1 font-medium leading-relaxed">
                   {item.subtext}
                 </div>
               </div>

@@ -2,26 +2,26 @@
 
 import { motion } from 'framer-motion'
 import { resumeData } from '@/lib/data'
-import { Wrench, Code2, Brain, BarChart3, Cloud, Database } from 'lucide-react'
+import { Wrench, Code2, Brain, BarChart3, Cloud, Database, Activity, Cpu } from 'lucide-react'
 
 const { skills } = resumeData
 
 const categoryMeta: Record<string, { icon: any; description: string }> = {
-  'Languages': {
+  'Software Engineering & Cloud': {
     icon: Code2,
-    description: 'Core programming languages for ML, systems, and algorithms',
+    description: 'Core languages, backend frameworks, distributed databases, and cloud infrastructure',
   },
-  'AI, ML & Deep Learning': {
+  'Applied Machine Learning & Deep Learning': {
     icon: Brain,
-    description: 'Neural networks, computer vision, NLP, and agentic workflows',
+    description: 'Neural networks, computer vision, ONNX runtime optimization, and agentic systems',
   },
-  'Data Science & Signal Processing': {
+  'Data Analytics, BI & Big Data': {
     icon: BarChart3,
-    description: 'Statistical analysis, biosignal processing, and visual analytics',
+    description: 'Databricks architecture, SQL query patterns, clustering, and visual analytics dashboards',
   },
-  'Platforms & Cloud Infrastructure': {
-    icon: Cloud,
-    description: 'Cloud deployment, containers, databases, and monitoring',
+  'Signal Processing & Statistical Methods': {
+    icon: Activity,
+    description: 'Acoustic FFT processing, biosignals (EEG), data balancing, and hypothesis testing',
   },
 }
 

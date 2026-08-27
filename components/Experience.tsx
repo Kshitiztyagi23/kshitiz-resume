@@ -19,7 +19,7 @@ export default function Experience() {
           Engineering & Applied AI Internships
         </h2>
         <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
-          Designing self-healing RAG pipelines, meeting extraction graphs, computer vision bias fixes, and low-latency inference in production.
+          Building scalable distributed event pipelines, conversational knowledge extraction graphs, computer vision systems, and low-latency production microservices.
         </p>
 
         {/* Experience Cards */}

@@ -9,11 +9,10 @@ const { projects } = resumeData
 
 const categories = [
   'All',
-  'AI & ML Systems',
-  'Cognitive & EEG',
-  'Computer Vision',
-  'Data Analytics',
-  'Robotics',
+  'SDE & Full-Stack',
+  'Machine Learning & AI',
+  'Data Analytics & BI',
+  'Biosignals & Robotics',
 ] as const
 
 export default function Projects() {

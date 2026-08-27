@@ -15,23 +15,31 @@ const jetbrainsMono = JetBrains_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Kshitiz Tyagi | AI/ML Engineer & Researcher · IIT Kanpur',
+  title: 'Kshitiz Tyagi | AI/ML, Data Science & Systems · IIT Kanpur',
   description:
-    'Fourth-year undergraduate at IIT Kanpur specializing in AI/ML systems, self-healing RAG pipelines, and neuro-computational modeling. First author at CogSci 2026.',
+    'Fourth-year undergraduate at IIT Kanpur with experience in production AI systems, distributed pipelines, and analytics infrastructure at Battery Smart and Skaeo. First author at CogSci 2026.',
   keywords: [
     'Kshitiz Tyagi',
     'IIT Kanpur',
-    'Machine Learning',
-    'AI Systems',
+    'Software Engineer',
+    'Data Scientist',
+    'Data Analyst',
+    'Machine Learning Engineer',
+    'System Design',
+    'FastAPI',
+    'React',
+    'PostgreSQL',
+    'PyTorch',
+    'Computer Vision',
+    'Databricks',
+    'SQL',
     'CogSci 2026',
     'Battery Smart',
     'Skaeo',
-    'Bioengineering',
-    'Portfolio',
   ],
   openGraph: {
-    title: 'Kshitiz Tyagi | AI/ML Engineer & Researcher',
-    description: 'B.Tech at IIT Kanpur · First Author CogSci 2026 · Ex-Battery Smart & Skaeo',
+    title: 'Kshitiz Tyagi | AI/ML, Data Science & Systems',
+    description: 'Fourth-Year Undergraduate at IIT Kanpur · Ex-Battery Smart & Skaeo · CogSci 2026 First Author',
     type: 'website',
   },
 }
