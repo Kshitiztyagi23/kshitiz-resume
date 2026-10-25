@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 
@@ -13,6 +13,10 @@ const jetbrainsMono = JetBrains_Mono({
   variable: '--font-mono',
   display: 'swap',
 })
+
+export const viewport: Viewport = {
+  themeColor: '#0B0D0F',
+}
 
 export const metadata: Metadata = {
   title: 'Kshitiz Tyagi | AI/ML, Data Science & Systems · IIT Kanpur',
@@ -51,11 +55,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`scroll-smooth ${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="bg-white text-zinc-900 antialiased font-sans selection:bg-orange-100 selection:text-orange-900">
-        <div className="relative min-h-screen bg-white">
-          {children}
-        </div>
-      </body>
+      <body>{children}</body>
     </html>
   )
 }

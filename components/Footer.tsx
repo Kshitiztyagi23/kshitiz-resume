@@ -2,105 +2,86 @@
 
 import { useState } from 'react'
 import { resumeData } from '@/lib/data'
-import { Mail, Copy, Check, ArrowUpRight, Heart } from 'lucide-react'
-import { GithubIcon, LinkedinIcon } from '@/components/Icons'
+import { resumeHref } from '@/lib/site'
+import { Frame } from '@/components/ui'
 
 const { personal } = resumeData
 
 export default function Footer() {
   const [copied, setCopied] = useState(false)
 
-  const handleCopyEmail = () => {
+  const copyEmail = () => {
     navigator.clipboard.writeText(personal.email)
     setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+    setTimeout(() => setCopied(false), 1800)
   }
 
+  const links = [
+    { k: 'github', v: `github.com/${personal.github}`, href: personal.githubUrl },
+    { k: 'linkedin', v: `linkedin.com/in/${personal.linkedin}`, href: personal.linkedinUrl },
+    { k: 'resume', v: 'cv.pdf', href: resumeHref },
+  ]
+
   return (
-    <>
-      {/* Contact Section */}
-      <section id="contact" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono bg-orange-50 text-orange-800 border border-orange-200 mb-4">
-            <span className="w-1.5 h-1.5 rounded-full bg-safety-500" />
-            Let&apos;s Connect
-          </div>
-
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-zinc-950 tracking-tight mb-4">
-            Interested in Collaborating?
-          </h2>
-          <p className="text-zinc-600 text-sm sm:text-base max-w-xl mx-auto mb-8 leading-relaxed font-sans">
-            I am actively looking for impactful AI/ML engineering roles, research attachments, and systems projects. Feel free to reach out via email or connect on social platforms.
+    <footer id="contact">
+      <Frame className="grid grid-cols-12 gap-x-8 gap-y-10 py-20 md:py-28">
+        <div className="col-span-12 lg:col-span-7">
+          <p className="font-mono text-xs text-fg-dim">
+            <span className="text-accent">$</span> contact --open
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
-            <a
-              href={`mailto:${personal.email}`}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-safety-500 hover:bg-safety-600 text-white font-semibold text-sm shadow-sm transition-all hover:shadow-orange-glow"
-            >
-              <Mail className="w-4 h-4" />
-              <span>Send Email</span>
-            </a>
-
-            <button
-              onClick={handleCopyEmail}
-              className="inline-flex items-center gap-2 px-5 py-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 text-sm font-mono shadow-xs transition-colors"
-            >
-              {copied ? (
-                <>
-                  <Check className="w-4 h-4 text-emerald-600" />
-                  <span className="text-emerald-700">Copied {personal.email}</span>
-                </>
-              ) : (
-                <>
-                  <Copy className="w-4 h-4 text-zinc-400" />
-                  <span>{personal.email}</span>
-                </>
-              )}
-            </button>
-
-            <a
-              href={personal.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 text-sm font-mono shadow-xs transition-colors"
-            >
-              <GithubIcon className="w-4 h-4 text-zinc-600" />
-              <span>GitHub</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
-            </a>
-
-            <a
-              href={personal.linkedinUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-3 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-800 text-sm font-mono shadow-xs transition-colors"
-            >
-              <LinkedinIcon className="w-4 h-4 text-blue-600" />
-              <span>LinkedIn</span>
-              <ArrowUpRight className="w-3.5 h-3.5 text-zinc-400" />
-            </a>
-          </div>
+          <h2 className="mt-4 font-mono text-3xl font-semibold leading-tight tracking-tight text-fg sm:text-[44px]">
+            Hiring for SDE, data science or analytics?
+          </h2>
+          <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-fg-muted">
+            Email is the fastest way to reach me. I&apos;m also open to research attachments and systems work.
+          </p>
         </div>
-      </section>
 
-      {/* Footer Bar */}
-      <footer className="py-8 bg-zinc-50 px-4 sm:px-6">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 font-mono">
-          <div>
-            © {new Date().getFullYear()} {personal.name} · Department of BSBE, IIT Kanpur
-          </div>
-          <div className="flex items-center gap-1 text-zinc-600">
-            <span>Built with</span>
-            <span className="font-semibold text-zinc-900">Next.js 15</span>
-            <span>·</span>
-            <span className="font-semibold text-safety-600">Safety Orange</span>
-            <span>&</span>
-            <span className="font-semibold text-zinc-900">Tailwind</span>
-          </div>
+        <div className="col-span-12 lg:col-span-5 lg:pt-12">
+          <dl className="divide-y divide-line border-y border-line font-mono text-[13px]">
+            <div className="grid grid-cols-[6rem_minmax(0,1fr)_auto] items-center gap-3 py-3">
+              <dt className="text-fg-dim">email</dt>
+              <dd className="truncate">
+                <a href={`mailto:${personal.email}`} className="text-fg hover:text-accent">
+                  {personal.email}
+                </a>
+              </dd>
+              <dd>
+                <button
+                  type="button"
+                  onClick={copyEmail}
+                  className="font-mono text-[11px] text-fg-dim hover:text-fg"
+                  aria-live="polite"
+                >
+                  {copied ? <span className="text-syn-str">copied</span> : 'copy'}
+                </button>
+              </dd>
+            </div>
+            {links.map((l) => (
+              <div key={l.k} className="grid grid-cols-[6rem_minmax(0,1fr)_auto] items-center gap-3 py-3">
+                <dt className="text-fg-dim">{l.k}</dt>
+                <dd className="truncate">
+                  <a href={l.href} target="_blank" rel="noopener noreferrer" className="text-fg-muted hover:text-accent">
+                    {l.v}
+                  </a>
+                </dd>
+                <dd className="text-[11px] text-fg-dim" aria-hidden="true">
+                  ↗
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
-      </footer>
-    </>
+      </Frame>
+
+      <div className="border-t border-line">
+        <Frame className="flex flex-col gap-2 py-6 font-mono text-[11px] text-fg-dim sm:flex-row sm:justify-between">
+          <span>
+            © {new Date().getFullYear()} {personal.name} · BSBE, IIT Kanpur
+          </span>
+          <span>next.js · static export · github pages</span>
+        </Frame>
+      </div>
+    </footer>
   )
 }
-

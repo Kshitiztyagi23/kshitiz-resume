@@ -1,3 +1,20 @@
+import {
+  type Pipeline,
+  feedbackLoop,
+  meetingKnowledge,
+  yoloBiasFix,
+  faceLiveness,
+  serialOcr,
+  marketingAgents,
+  spatialLearning,
+  spikeverse,
+  wordForThought,
+  cineScope,
+  mindsMirror,
+} from './pipelines'
+
+export type { Pipeline } from './pipelines'
+
 export interface EducationItem {
   year: string
   degree: string
@@ -26,6 +43,7 @@ export interface WorkExperienceItem {
     description: string
     metrics?: string
     tags?: string[]
+    pipeline?: Pipeline
   }[]
   resultsSummary: string[]
   stack: string[]
@@ -62,6 +80,7 @@ export interface ProjectItem {
   github?: string
   demo?: string
   featured?: boolean
+  pipeline?: Pipeline
 }
 
 export interface LeadershipItem {
@@ -192,6 +211,7 @@ export const resumeData = {
             'Built a self-correcting feedback loop on top of the AI assistant’s MCP server: flagged errors get logged to Postgres, posted as a Slack review card for approval, then committed to GitHub via the REST API and batched into a PR (Pull Request). Prevented replicas from racing on the same correction with one atomic database claim SQL statement.',
           metrics: '3–5s latency · 0 duplicate commits',
           tags: ['MCP', 'PostgreSQL', 'Concurrency Control', 'Slack API', 'GitHub REST API'],
+          pipeline: feedbackLoop,
         },
         {
           title: '6-Stage Meeting Knowledge Extraction Pipeline',
@@ -199,6 +219,7 @@ export const resumeData = {
             'Meeting transcripts (ingested via API or Slack) go through a 6-stage pipeline: PII redaction first, then a headless LLM (Kiro CLI) extracts structured knowledge points, stored as vector embeddings within a 1GiB memory budget. At query time, the assistant matches the user’s question against these embeddings to pull in relevant context.',
           metrics: '1,613 meetings · $0 inference cost · <1GiB RAM',
           tags: ['NLP', 'MiniLM', 'Knowledge Embeddings', 'PII Redaction', 'Data Pipeline'],
+          pipeline: meetingKnowledge,
         },
         {
           title: 'Databricks Schema Architecture & RCA Playbook',
@@ -213,6 +234,7 @@ export const resumeData = {
             'Diagnosed a training data bias in a YOLO face-verification model that repeatedly blocked bearded drivers despite no actual occlusion. Relabeled data in CVAT and fine-tuned the model across 50 epochs.',
           metrics: '508 false blocks eliminated · 3.3x defect catch · 0.84 ➔ 0.96 conf',
           tags: ['YOLO', 'CVAT', 'Computer Vision', 'Fine-Tuning', 'Model Evaluation'],
+          pipeline: yoloBiasFix,
         },
       ],
       resultsSummary: [
@@ -238,6 +260,7 @@ export const resumeData = {
             'Integrated a traditional face liveness detection system using dlib (HOG face detector + 68-point facial landmarks) in the "My RollCall Pro" mobile app to prevent spoofing. Evaluated multiple approaches and optimized multi-cue tracking for Eye Aspect Ratio (EAR blink), Mouth Aspect Ratio (MAR smile), and pupil dynamics.',
           metrics: '5s inference time post-API integration',
           tags: ['dlib', 'Computer Vision', 'Facial Landmarks', 'Biometrics', 'FastAPI'],
+          pipeline: faceLiveness,
         },
         {
           title: 'High-Speed Serial Number OCR Pipeline',
@@ -245,6 +268,7 @@ export const resumeData = {
             'Benchmarked OCR engines across latency-accuracy trade-offs; customized RapidOCR with ONNX Runtime, developing complete image preprocessing and extraction logic for high-speed serial number recognition.',
           metrics: '2s inference latency in production',
           tags: ['RapidOCR', 'ONNX Runtime', 'Python', 'Image Processing', 'Performance'],
+          pipeline: serialOcr,
         },
         {
           title: 'Multi-Agent Marketing Automation Engine',
@@ -252,6 +276,7 @@ export const resumeData = {
             'Built an automated system using LangChain and Phidata streamlining SWOT analysis, dynamic content ideation, generation, and post scheduling; built a Telegram bot analyzing URLs for automated contextual interaction.',
           metrics: '+29.8% marketing efficiency · -40% manual effort',
           tags: ['LangChain', 'Phidata', 'LLMs', 'Workflow Automation', 'Telegram API'],
+          pipeline: marketingAgents,
         },
       ],
       resultsSummary: [
@@ -277,6 +302,7 @@ export const resumeData = {
       ],
       metrics: 'Real-time 3D task validation · AWS cloud architecture',
       tags: ['React', 'FastAPI', 'PostgreSQL', 'AWS', '3D Graphics', 'Full-Stack SWE'],
+      pipeline: spatialLearning,
       featured: true,
     },
     {
@@ -292,6 +318,7 @@ export const resumeData = {
       ],
       metrics: '40%+ Energy Reduction · 2,000 Training Episodes',
       tags: ['PyTorch', 'Double DQN', 'SNN', 'LIF Neurons', 'Neuromorphic', 'Reinforcement Learning'],
+      pipeline: spikeverse,
       featured: true,
     },
     {
@@ -307,6 +334,7 @@ export const resumeData = {
       ],
       metrics: '97% Emotion Accuracy · 20+ Member Team Lead',
       tags: ['Python', '2D CNN', 'FFT Spectrograms', 'Librosa', 'Signal Processing', 'Audio ML'],
+      pipeline: wordForThought,
       featured: true,
     },
     {
@@ -322,6 +350,7 @@ export const resumeData = {
       ],
       metrics: '90% Classification Accuracy · 200 EEG Samples',
       tags: ['EEG', 'PsychoPy', '1D CNN', 'SMOTE', 'Welch PSD', 'Biosignals'],
+      pipeline: mindsMirror,
       featured: false,
     },
     {
@@ -337,6 +366,7 @@ export const resumeData = {
       ],
       metrics: '900K+ Movies · 7+ Dynamic Visualizations · t-SNE Clustering',
       tags: ['Python', 'Plotly', 'Dash', 'PCA / t-SNE', 'Big Data', 'Visual Analytics'],
+      pipeline: cineScope,
       featured: true,
     },
     {

@@ -1,146 +1,188 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { resumeData, ProjectItem } from '@/lib/data'
-import { FolderGit2, Sparkles, ExternalLink, Layers, ArrowUpRight } from 'lucide-react'
+import { Fragment, useState } from 'react'
+import { resumeData, type ProjectItem } from '@/lib/data'
+import { slugify } from '@/lib/site'
+import { Section, Panel, Tags, MetricList } from '@/components/ui'
+import PipelineMap from '@/components/PipelineMap'
 
 const { projects } = resumeData
 
-const categories = [
-  'All',
-  'SDE & Full-Stack',
-  'Machine Learning & AI',
-  'Data Analytics & BI',
-  'Biosignals & Robotics',
-] as const
+const filters: { flag: string; category?: ProjectItem['category'] }[] = [
+  { flag: '--all' },
+  { flag: '--sde', category: 'SDE & Full-Stack' },
+  { flag: '--ml', category: 'Machine Learning & AI' },
+  { flag: '--data', category: 'Data Analytics & BI' },
+  { flag: '--bio', category: 'Biosignals & Robotics' },
+]
 
-export default function Projects() {
-  const [activeCategory, setActiveCategory] = useState<string>('All')
-
-  const filteredProjects = activeCategory === 'All'
-    ? projects
-    : projects.filter((p) => p.category === activeCategory)
-
+function FeaturedProject({ p }: { p: ProjectItem }) {
   return (
-    <section id="projects" className="py-20 md:py-24 bg-zinc-50/50 border-b border-zinc-200/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        {/* Section Header */}
-        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
-          <FolderGit2 className="w-4 h-4" />
-          <span>Engineered Systems & Research</span>
+    <Panel id={`project-${slugify(p.name)}`} title={`projects/${slugify(p.name)}`} meta={p.period}>
+      <div className="grid grid-cols-12 gap-x-8 gap-y-5 px-4 py-6 sm:px-5">
+        <div className="col-span-12 md:col-span-5">
+          <h3 className="font-mono text-2xl font-semibold tracking-tight text-fg">{p.name}</h3>
+          <p className="mt-2 text-[15px] leading-snug text-fg">{p.tagline}</p>
+          <p className="mt-3 font-mono text-[11px] leading-relaxed text-fg-dim">{p.context}</p>
+          {p.metrics && <MetricList value={p.metrics} className="mt-4" />}
         </div>
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-2">
-              Featured Projects & Implementations
-            </h2>
-            <p className="text-zinc-600 text-sm sm:text-base max-w-2xl">
-              From neuromorphic spiking neural networks and EEG decoding to big-data visual analytics and autonomous robotics.
-            </p>
-          </div>
-        </div>
-
-        {/* Filter Pills */}
-        <div className="flex flex-wrap items-center gap-2 mb-10 pb-2 border-b border-zinc-200/60">
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat
-            return (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-all duration-150 ${
-                  isActive
-                    ? 'bg-safety-500 text-white font-semibold shadow-xs'
-                    : 'bg-white border border-zinc-200 text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100'
-                }`}
-              >
-                {cat}
-              </button>
-            )
-          })}
-        </div>
-
-        {/* Projects Bento Grid */}
-        <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <AnimatePresence>
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.name}
-                layout
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                transition={{ duration: 0.25, delay: index * 0.04 }}
-                className={`group flex flex-col justify-between bg-white rounded-xl border p-6 transition-all duration-200 interactive-card ${
-                  project.featured
-                    ? 'border-orange-300 shadow-xs ring-1 ring-orange-400/20'
-                    : 'border-zinc-200 shadow-xs'
-                }`}
-              >
-                <div>
-                  {/* Top Bar: Category & Period */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span
-                      className={`text-[11px] font-mono font-medium px-2 py-0.5 rounded ${
-                        project.featured
-                          ? 'bg-orange-50 text-orange-800 border border-orange-200 font-semibold'
-                          : 'bg-zinc-100 text-zinc-600'
-                      }`}
-                    >
-                      {project.category}
-                    </span>
-                    <span className="text-[11px] font-mono text-zinc-400">{project.period}</span>
-                  </div>
-
-                  {/* Title & Context */}
-                  <h3 className="text-lg font-bold text-zinc-950 tracking-tight group-hover:text-safety-600 transition-colors flex items-center justify-between">
-                    <span>{project.name}</span>
-                    <ArrowUpRight className="w-4 h-4 text-zinc-400 group-hover:text-safety-600 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </h3>
-                  <div className="text-xs text-zinc-500 font-mono mb-3">{project.context}</div>
-
-                  {/* Tagline */}
-                  <p className="text-xs sm:text-sm text-zinc-700 font-medium mb-4 leading-relaxed">
-                    {project.tagline}
-                  </p>
-
-                  {/* Metric Pill if available */}
-                  {project.metrics && (
-                    <div className="text-[11px] font-mono font-semibold text-safety-700 bg-orange-50 px-2.5 py-1 rounded border border-orange-200/80 mb-4 flex items-center gap-1.5">
-                      <Sparkles className="w-3 h-3 text-safety-500 shrink-0" />
-                      <span>{project.metrics}</span>
-                    </div>
-                  )}
-
-                  {/* Bullet Points */}
-                  <ul className="space-y-1.5 mb-5 text-xs text-zinc-600 leading-relaxed">
-                    {project.bullets.map((b, bIdx) => (
-                      <li key={bIdx} className="flex items-start gap-2">
-                        <span className="text-safety-500 font-bold shrink-0">·</span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Footer Tech Tags */}
-                <div className="pt-4 border-t border-zinc-100 flex flex-wrap gap-1.5">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-0.5 rounded text-[10px] font-mono bg-zinc-100 text-zinc-600 border border-zinc-200/80"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
+        <div className="col-span-12 md:col-span-7">
+          <ul className="space-y-2">
+            {p.bullets.map((b) => (
+              <li key={b} className="grid grid-cols-[1rem_minmax(0,1fr)] text-sm leading-relaxed text-fg-muted">
+                <span className="font-mono text-fg-dim">-</span>
+                <span>{b}</span>
+              </li>
             ))}
-          </AnimatePresence>
-        </motion.div>
+          </ul>
+          <Tags items={p.tags} className="mt-4" />
+        </div>
       </div>
-    </section>
+      {p.pipeline && (
+        <div className="border-t border-line px-4 py-5 sm:px-5">
+          <PipelineMap pipeline={p.pipeline} name={slugify(p.name)} />
+        </div>
+      )}
+    </Panel>
   )
 }
 
+export default function Projects() {
+  const [flag, setFlag] = useState('--all')
+  const [openRow, setOpenRow] = useState<string | null>(null)
+
+  const featured = projects.filter((p) => p.featured)
+  const active = filters.find((f) => f.flag === flag)!
+  const rows = active.category ? projects.filter((p) => p.category === active.category) : projects
+
+  return (
+    <Section
+      id="projects"
+      index="03"
+      title="Projects"
+      cmd="ls projects/ --sort=impact"
+      note="Click any stage in a diagram to inspect it, or step through with the arrow keys. The full index is below."
+    >
+      <div className="space-y-8">
+        {featured.map((p) => (
+          <FeaturedProject key={p.name} p={p} />
+        ))}
+      </div>
+
+      {/* Full index */}
+      <div className="mt-16">
+        <div className="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-3">
+          <h3 className="font-mono text-sm text-fg">
+            index <span className="text-fg-dim">({rows.length})</span>
+          </h3>
+          <div className="flex flex-wrap gap-1 font-mono text-[11px]" role="group" aria-label="Filter projects">
+            {filters.map((f) => (
+              <button
+                key={f.flag}
+                type="button"
+                aria-pressed={flag === f.flag}
+                onClick={() => setFlag(f.flag)}
+                className={`h-7 rounded-sm border px-2 transition-colors ${
+                  flag === f.flag
+                    ? 'border-accent text-accent'
+                    : 'border-transparent text-fg-dim hover:border-line-strong hover:text-fg'
+                }`}
+              >
+                {f.flag}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <table className="w-full table-fixed border-collapse text-left">
+          <thead className="font-mono text-[11px] text-fg-dim">
+            <tr className="border-b border-line">
+              <th className="w-10 py-2 font-normal">#</th>
+              <th className="py-2 font-normal">project</th>
+              <th className="hidden w-40 py-2 font-normal md:table-cell">area</th>
+              <th className="hidden w-40 py-2 font-normal lg:table-cell">period</th>
+              <th className="w-8 py-2" />
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((p, i) => {
+              const open = openRow === p.name
+              const detailId = `row-${slugify(p.name)}`
+              return (
+                <Fragment key={p.name}>
+                  <tr
+                    className={`cursor-pointer border-b border-line align-top transition-colors hover:bg-ink-900 ${
+                      open ? 'bg-ink-900' : ''
+                    }`}
+                    onClick={() => setOpenRow(open ? null : p.name)}
+                  >
+                    <td className="py-3 font-mono text-xs text-fg-dim">{String(i + 1).padStart(2, '0')}</td>
+                    <td className="py-3 pr-4">
+                      <button
+                        type="button"
+                        aria-expanded={open}
+                        aria-controls={detailId}
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setOpenRow(open ? null : p.name)
+                        }}
+                        className="text-left"
+                      >
+                        <span className={`font-mono text-sm ${open ? 'text-accent' : 'text-fg'}`}>{p.name}</span>
+                        {p.featured && <span className="ml-2 font-mono text-[10px] text-fg-dim">[featured]</span>}
+                        <span className="mt-0.5 block text-[13px] leading-snug text-fg-muted">{p.tagline}</span>
+                      </button>
+                    </td>
+                    <td className="hidden py-3 pr-4 font-mono text-[11px] leading-5 text-fg-muted md:table-cell">
+                      {p.category}
+                    </td>
+                    <td className="hidden py-3 pr-4 font-mono text-[11px] leading-5 text-fg-dim lg:table-cell">
+                      {p.period}
+                    </td>
+                    <td className="py-3 text-right font-mono text-xs text-fg-dim" aria-hidden="true">
+                      {open ? '−' : '+'}
+                    </td>
+                  </tr>
+                  {open && (
+                    <tr id={detailId} className="border-b border-line bg-ink-900">
+                      <td />
+                      <td colSpan={4} className="pb-6 pr-4 pt-1">
+                        <p className="font-mono text-[11px] text-fg-dim">{p.context}</p>
+                        <ul className="mt-3 space-y-1.5">
+                          {p.bullets.map((b) => (
+                            <li
+                              key={b}
+                              className="grid grid-cols-[1rem_minmax(0,1fr)] text-sm leading-relaxed text-fg-muted"
+                            >
+                              <span className="font-mono text-fg-dim">-</span>
+                              <span>{b}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        {p.metrics && <MetricList value={p.metrics} className="mt-3" />}
+                        <Tags items={p.tags} className="mt-3" />
+                        {p.pipeline && !p.featured && (
+                          <div className="mt-5">
+                            <PipelineMap pipeline={p.pipeline} name={slugify(p.name)} />
+                          </div>
+                        )}
+                        {p.featured && (
+                          <a
+                            href={`#project-${slugify(p.name)}`}
+                            className="mt-4 inline-block font-mono text-[11px] text-accent hover:underline"
+                          >
+                            → view architecture above
+                          </a>
+                        )}
+                      </td>
+                    </tr>
+                  )}
+                </Fragment>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+    </Section>
+  )
+}

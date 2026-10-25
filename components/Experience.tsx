@@ -1,147 +1,112 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { resumeData } from '@/lib/data'
-import { Briefcase, Building2, Calendar, CheckCircle2, Cpu, Zap, ChevronRight } from 'lucide-react'
+import { useState } from 'react'
+import { resumeData, type WorkExperienceItem } from '@/lib/data'
+import { slugify } from '@/lib/site'
+import { Section, Panel, Tags, MetricList } from '@/components/ui'
+import PipelineMap from '@/components/PipelineMap'
 
 const { experience } = resumeData
 
-export default function Experience() {
+function Highlight({
+  h,
+  index,
+}: {
+  h: WorkExperienceItem['highlights'][number]
+  index: number
+}) {
+  const [open, setOpen] = useState(index === 0)
+  const mapId = `arch-${slugify(h.title)}`
+
   return (
-    <section id="experience" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        {/* Section Header */}
-        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
-          <Briefcase className="w-4 h-4" />
-          <span>Work Experience & Production AI</span>
+    <li className="border-t border-line px-4 py-5 sm:px-5">
+      <div className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3 md:grid-cols-[2rem_minmax(0,1fr)_13rem] md:gap-x-6">
+        <span className="pt-0.5 font-mono text-xs text-fg-dim">{String(index + 1).padStart(2, '0')}</span>
+        <div className="min-w-0">
+          <h4 className="text-[15px] font-semibold leading-snug text-fg">{h.title}</h4>
+          <p className="mt-2 text-sm leading-relaxed text-fg-muted">{h.description}</p>
+          {h.tags && <Tags items={h.tags} className="mt-3" />}
         </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
-          Engineering & Applied AI Internships
-        </h2>
-        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
-          Building scalable distributed event pipelines, conversational knowledge extraction graphs, computer vision systems, and low-latency production microservices.
-        </p>
-
-        {/* Experience Cards */}
-        <div className="space-y-8">
-          {experience.map((job, index) => (
-            <motion.div
-              key={job.company}
-              className="bg-white rounded-xl border border-zinc-200 shadow-xs hover:border-orange-300 transition-all duration-200 overflow-hidden"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
+        <div className="col-start-2 mt-4 md:col-start-3 md:mt-0 md:text-right">
+          {h.metrics && <MetricList value={h.metrics} />}
+          {h.pipeline && (
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              aria-expanded={open}
+              aria-controls={mapId}
+              className={`mt-3 inline-flex h-7 items-center gap-1.5 rounded-sm border px-2 font-mono text-[11px] transition-colors ${
+                open
+                  ? 'border-accent text-accent'
+                  : 'border-line-strong text-fg-muted hover:border-fg-dim hover:text-fg'
+              }`}
             >
-              <div className="p-6 sm:p-8">
-                {/* Header Row */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pb-5 border-b border-zinc-100">
-                  <div>
-                    <h3 className="text-xl font-bold text-zinc-950 tracking-tight flex items-center gap-2">
-                      {job.role}
-                    </h3>
-                    <div className="flex items-center gap-2 mt-1 font-mono text-xs text-zinc-600">
-                      <span className="font-semibold text-safety-600 flex items-center gap-1">
-                        <Building2 className="w-3.5 h-3.5" />
-                        {job.company}
-                      </span>
-                      <span>·</span>
-                      <span>{job.location}</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="badge-safety">
-                      <Calendar className="w-3 h-3" />
-                      {job.period}
-                    </span>
-                  </div>
-                </div>
-
-                {/* Objective */}
-                <div className="my-5 p-3.5 rounded-lg bg-zinc-50 border border-zinc-200/80 text-xs sm:text-sm text-zinc-700 leading-relaxed font-sans">
-                  <strong className="text-zinc-900 font-semibold font-mono text-xs uppercase block mb-1">
-                    System Objective:
-                  </strong>
-                  {job.objective}
-                </div>
-
-                {/* High-Impact Engineering Modules */}
-                <div className="space-y-4 mb-6">
-                  <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-wider font-mono">
-                    Architectural Contributions & Breakthroughs:
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
-                    {job.highlights.map((item, hIndex) => (
-                      <div
-                        key={hIndex}
-                        className="p-4 rounded-lg border border-zinc-200 bg-white hover:border-orange-200 transition-colors shadow-2xs"
-                      >
-                        <div className="flex items-start justify-between gap-2 mb-2">
-                          <h5 className="text-xs font-bold text-zinc-900 font-mono tracking-tight flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full bg-safety-500 shrink-0" />
-                            {item.title}
-                          </h5>
-                        </div>
-                        <p className="text-xs text-zinc-600 leading-relaxed mb-3">
-                          {item.description}
-                        </p>
-                        {item.metrics && (
-                          <div className="text-[11px] font-mono font-semibold text-safety-700 bg-orange-50 px-2 py-1 rounded border border-orange-200/60 mb-2">
-                            ⚡ {item.metrics}
-                          </div>
-                        )}
-                        {item.tags && (
-                          <div className="flex flex-wrap gap-1">
-                            {item.tags.map((t) => (
-                              <span
-                                key={t}
-                                className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-zinc-100 text-zinc-600"
-                              >
-                                {t}
-                              </span>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Quantified Production Results */}
-                <div className="p-4 rounded-lg bg-orange-50/50 border border-orange-200/80 mb-5">
-                  <div className="text-xs font-semibold text-orange-950 uppercase tracking-wider font-mono mb-2 flex items-center gap-1.5">
-                    <Zap className="w-3.5 h-3.5 text-safety-500" />
-                    <span>Key Production Results & Quantified Impact:</span>
-                  </div>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-zinc-800">
-                    {job.resultsSummary.map((res, rIndex) => (
-                      <li key={rIndex} className="flex items-start gap-2">
-                        <CheckCircle2 className="w-3.5 h-3.5 text-safety-600 shrink-0 mt-0.5" />
-                        <span>{res}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Tech Stack Chips */}
-                <div className="flex flex-wrap items-center gap-1.5 pt-4 border-t border-zinc-100">
-                  <span className="text-xs font-mono text-zinc-400 mr-2">Stack:</span>
-                  {job.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-zinc-100 text-zinc-700 border border-zinc-200 font-medium"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              <span aria-hidden="true">{open ? '▾' : '▸'}</span> architecture
+            </button>
+          )}
         </div>
       </div>
-    </section>
+      {h.pipeline && open && (
+        <div id={mapId} className="mt-5 md:ml-[2.75rem]">
+          <PipelineMap pipeline={h.pipeline} name={slugify(h.title)} />
+        </div>
+      )}
+    </li>
   )
 }
 
+export default function Experience() {
+  return (
+    <Section
+      id="experience"
+      index="01"
+      title="Experience"
+      cmd="git log --author=kshitiz --stat"
+      note="Two production internships. Each shipped change is listed with its measured result; open the architecture to step through how it works."
+    >
+      <div className="space-y-8">
+        {experience.map((job) => (
+          <Panel
+            key={job.company}
+            title={
+              <>
+                <span className="text-fg">{slugify(job.company)}</span>
+                <span className="text-fg-dim"> / {slugify(job.role)}</span>
+              </>
+            }
+            meta={`${job.period} · ${job.location}`}
+          >
+            <div className="px-4 py-5 sm:px-5">
+              <h3 className="text-xl font-semibold tracking-tight text-fg">
+                {job.company}
+                <span className="font-normal text-fg-dim"> — {job.role}</span>
+              </h3>
+              <p className="mt-2 max-w-3xl text-sm leading-relaxed text-fg-muted">{job.objective}</p>
+            </div>
+
+            <ol>
+              {job.highlights.map((h, i) => (
+                <Highlight key={h.title} h={h} index={i} />
+              ))}
+            </ol>
+
+            <div className="border-t border-line bg-ink-950/40 px-4 py-5 sm:px-5">
+              <div className="font-mono text-[11px] text-fg-dim">## outcome</div>
+              <ul className="mt-3 space-y-2">
+                {job.resultsSummary.map((r) => (
+                  <li key={r} className="grid grid-cols-[1rem_minmax(0,1fr)] text-sm leading-relaxed text-fg-muted">
+                    <span className="font-mono text-accent">›</span>
+                    <span>{r}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="mt-4 font-mono text-[11px] leading-relaxed text-fg-dim">
+                stack: <span className="text-fg-muted">{job.stack.join(', ')}</span>
+              </p>
+            </div>
+          </Panel>
+        ))}
+      </div>
+    </Section>
+  )
+}

@@ -1,71 +1,119 @@
-'use client'
+import { resumeData, type CourseItem } from '@/lib/data'
+import { Section } from '@/components/ui'
 
-import { motion } from 'framer-motion'
-import { resumeData } from '@/lib/data'
-import { GraduationCap, Calendar, Award } from 'lucide-react'
+const { education, scholasticAchievements, courses, extracurricular } = resumeData
 
-const { education } = resumeData
+const courseMark: Record<NonNullable<CourseItem['tag']>, { label: string; className: string }> = {
+  'Excellent Grade': { label: 'ex', className: 'text-syn-num' },
+  Core: { label: 'core', className: 'text-fg-dim' },
+  'Online Specialized': { label: 'mooc', className: 'text-fg-dim' },
+}
 
-export default function Education() {
+const courseGroups = ['CS & AI', 'Mathematics', 'Bioengineering'] as const
+
+function SubHead({ children, count }: { children: string; count?: number }) {
   return (
-    <section id="education" className="py-20 md:py-24 bg-white border-b border-zinc-200/80">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6">
-        {/* Section Header */}
-        <div className="flex items-center gap-2 mb-2 font-mono text-xs text-safety-600 font-semibold tracking-wider uppercase">
-          <GraduationCap className="w-4 h-4" />
-          <span>Academic Background</span>
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-zinc-950 tracking-tight mb-3">
-          Academic Qualifications
-        </h2>
-        <p className="text-zinc-600 text-sm sm:text-base max-w-2xl mb-10">
-          Indian Institute of Technology, Kanpur and senior secondary scholastic records.
-        </p>
-
-        {/* Education Timeline / Cards */}
-        <div className="space-y-4">
-          {education.map((edu, index) => (
-            <motion.div
-              key={edu.degree}
-              className="p-5 sm:p-6 rounded-xl border border-zinc-200 bg-white hover:border-orange-300 transition-all duration-200 interactive-card shadow-xs"
-              initial={{ opacity: 0, y: 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.35, delay: index * 0.08 }}
-            >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                <div className="flex items-start gap-3.5">
-                  <div className="p-2.5 rounded-lg bg-orange-50 text-safety-600 border border-orange-200/70 shrink-0">
-                    <GraduationCap className="w-5 h-5" />
-                  </div>
-                  <div>
-                    <h3 className="text-base sm:text-lg font-bold text-zinc-950 tracking-tight">
-                      {edu.degree}
-                    </h3>
-                    <div className="text-xs sm:text-sm text-zinc-600 font-mono mt-0.5">
-                      {edu.institute}
-                    </div>
-                    <div className="text-xs text-zinc-400 mt-1 font-sans">
-                      {edu.type}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex sm:flex-col items-center sm:items-end justify-between gap-2 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-zinc-100">
-                  <span className="badge-safety">
-                    <Calendar className="w-3 h-3" />
-                    {edu.year}
-                  </span>
-                  <div className="text-base sm:text-lg font-bold font-mono text-zinc-950 bg-zinc-50 px-2.5 py-1 rounded border border-zinc-200/80">
-                    {edu.score}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <h3 className="flex items-baseline justify-between border-b border-line pb-2 font-mono text-sm text-fg">
+      <span>
+        <span className="text-fg-dim">## </span>
+        {children}
+      </span>
+      {count !== undefined && <span className="text-[11px] text-fg-dim">{count}</span>}
+    </h3>
   )
 }
 
+export default function Education() {
+  return (
+    <Section
+      id="education"
+      index="06"
+      title="Education"
+      cmd="cat transcript.txt"
+      note="Degree, awards, coursework, and life outside the lab."
+    >
+      <div className="space-y-14">
+        {/* Degrees */}
+        <div>
+          <SubHead>degrees</SubHead>
+          <table className="w-full border-collapse text-left">
+            <tbody>
+              {education.map((e) => (
+                <tr key={e.degree} className="border-b border-line align-top">
+                  <td className="w-28 py-4 pr-4 font-mono text-xs text-fg-dim">{e.year}</td>
+                  <td className="py-4 pr-4">
+                    <div className="text-[15px] font-medium text-fg">{e.degree}</div>
+                    <div className="mt-0.5 text-[13px] text-fg-muted">{e.institute}</div>
+                  </td>
+                  <td className="py-4 text-right font-mono text-sm text-syn-num">{e.score}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Awards */}
+        <div>
+          <SubHead count={scholasticAchievements.length}>awards &amp; recognition</SubHead>
+          <ul>
+            {scholasticAchievements.map((a) => (
+              <li
+                key={a.title}
+                className="grid grid-cols-1 gap-x-6 gap-y-1 border-b border-line py-4 sm:grid-cols-[8.5rem_minmax(0,1fr)]"
+              >
+                <span className="font-mono text-xs text-accent">{a.badge}</span>
+                <div>
+                  <div className="text-[15px] font-medium text-fg">{a.title}</div>
+                  <p className="mt-1 text-[13px] leading-relaxed text-fg-muted">{a.description}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Courses */}
+        <div>
+          <SubHead count={courses.length}>coursework</SubHead>
+          <div className="grid grid-cols-1 gap-x-8 gap-y-6 pt-4 md:grid-cols-3">
+            {courseGroups.map((g) => (
+              <div key={g}>
+                <div className="font-mono text-[11px] text-fg-dim">{g}</div>
+                <ul className="mt-2 space-y-1.5">
+                  {courses
+                    .filter((c) => c.category === g)
+                    .map((c) => {
+                      const mark = c.tag ? courseMark[c.tag] : null
+                      return (
+                        <li key={c.name} className="flex items-baseline justify-between gap-3 text-[13px] text-fg-muted">
+                          <span>{c.name}</span>
+                          {mark && (
+                            <span className={`shrink-0 font-mono text-[10px] ${mark.className}`}>{mark.label}</span>
+                          )}
+                        </li>
+                      )
+                    })}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <p className="mt-4 font-mono text-[11px] text-fg-dim">
+            <span className="text-syn-num">ex</span> = excellent grade · core = departmental core · mooc = online
+            specialization
+          </p>
+        </div>
+
+        {/* Extra-curricular */}
+        <div>
+          <SubHead>off the clock</SubHead>
+          <ul>
+            {extracurricular.map((x) => (
+              <li key={x.title} className="border-b border-line py-3 text-[13px] leading-relaxed text-fg-muted">
+                <span className="font-medium text-fg">{x.title}.</span> {x.description}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Section>
+  )
+}

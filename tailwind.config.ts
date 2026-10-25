@@ -9,45 +9,42 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        canvas: '#FFFFFF',
-        'canvas-subtle': '#FAFAFA',
-        'canvas-muted': '#F4F4F5',
-        'border-subtle': '#E4E4E7',
-        'border-strong': '#D4D4D8',
-        'text-strong': '#09090B',
-        'text-base': '#27272A',
-        'text-muted': '#71717A',
-        'text-faint': '#A1A1AA',
-        safety: {
-          50: '#FFF7ED',
-          100: '#FFEDD5',
-          200: '#FED7AA',
-          300: '#FDBA74',
-          400: '#FB923C',
-          500: '#FF5500', // True Industrial / Safety Orange
-          600: '#EA580C',
-          700: '#C2410C',
-          800: '#9A3412',
-          900: '#7C2D12',
+        ink: {
+          950: '#0B0D0F', // page
+          900: '#101316', // panel
+          850: '#14181C', // panel header / hover
+          800: '#1A1F24', // raised
+        },
+        line: {
+          DEFAULT: '#252B31',
+          strong: '#363E46',
+        },
+        fg: {
+          DEFAULT: '#E4E7EA',
+          muted: '#A3ABB3',
+          dim: '#7C858E',
+        },
+        accent: {
+          DEFAULT: '#FF6A1A',
+          dim: '#C9561A',
+        },
+        // Syntax-style accents, used only for values inside terminal blocks
+        syn: {
+          str: '#9CC28A',
+          num: '#E0B05C',
         },
       },
       fontFamily: {
         sans: ['var(--font-sans)', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['var(--font-mono)', 'JetBrains Mono', 'monospace'],
+        mono: ['var(--font-mono)', 'JetBrains Mono', 'ui-monospace', 'monospace'],
       },
-      boxShadow: {
-        'card-subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 1px 2px -1px rgba(0, 0, 0, 0.04)',
-        'card-hover': '0 10px 30px -10px rgba(255, 85, 0, 0.12), 0 4px 12px -2px rgba(0, 0, 0, 0.04)',
-        'orange-glow': '0 0 24px -4px rgba(255, 85, 0, 0.35)',
+      borderRadius: {
+        sm: '2px',
+        DEFAULT: '3px',
+        md: '4px',
       },
-      animation: {
-        'pulse-subtle': 'pulseSubtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-      },
-      keyframes: {
-        pulseSubtle: {
-          '0%, 100%': { opacity: '1' },
-          '50%': { opacity: '0.6' },
-        },
+      maxWidth: {
+        frame: '1200px',
       },
     },
   },
