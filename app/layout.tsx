@@ -19,31 +19,12 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
-  title: 'Kshitiz Tyagi | AI/ML, Data Science & Systems · IIT Kanpur',
+  title: 'Kshitiz Tyagi · ML systems & data',
   description:
-    'Fourth-year undergraduate at IIT Kanpur with experience in production AI systems, distributed pipelines, and analytics infrastructure at Battery Smart and Skaeo. First author at CogSci 2026.',
-  keywords: [
-    'Kshitiz Tyagi',
-    'IIT Kanpur',
-    'Software Engineer',
-    'Data Scientist',
-    'Data Analyst',
-    'Machine Learning Engineer',
-    'System Design',
-    'FastAPI',
-    'React',
-    'PostgreSQL',
-    'PyTorch',
-    'Computer Vision',
-    'Databricks',
-    'SQL',
-    'CogSci 2026',
-    'Battery Smart',
-    'Skaeo',
-  ],
+    'Kshitiz Tyagi builds ML systems, data pipelines and the software around them. IIT Kanpur, previously Battery Smart and Skaeo, first author at CogSci 2026.',
   openGraph: {
-    title: 'Kshitiz Tyagi | AI/ML, Data Science & Systems',
-    description: 'Fourth-Year Undergraduate at IIT Kanpur · Ex-Battery Smart & Skaeo · CogSci 2026 First Author',
+    title: 'Kshitiz Tyagi · ML systems & data',
+    description: 'Selected work: self-correcting AI assistants, PII-safe NLP pipelines, production computer vision.',
     type: 'website',
   },
 }

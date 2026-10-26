@@ -1,11 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { resumeData } from '@/lib/data'
+import { personal } from '@/lib/content'
 import { resumeHref } from '@/lib/site'
 import { Frame } from '@/components/ui'
 
-const { personal } = resumeData
 
 export default function Footer() {
   const [copied, setCopied] = useState(false)
@@ -33,7 +32,7 @@ export default function Footer() {
             Hiring for SDE, data science or analytics?
           </h2>
           <p className="mt-5 max-w-lg text-[15px] leading-relaxed text-fg-muted">
-            Email is the fastest way to reach me. I&apos;m also open to research attachments and systems work.
+            Email is the fastest way to reach me. Happy to walk through any of this work in detail.
           </p>
         </div>
 
@@ -77,7 +76,7 @@ export default function Footer() {
       <div className="border-t border-line">
         <Frame className="flex flex-col gap-2 py-6 font-mono text-[11px] text-fg-dim sm:flex-row sm:justify-between">
           <span>
-            © {new Date().getFullYear()} {personal.name} · BSBE, IIT Kanpur
+            © {new Date().getFullYear()} {personal.name} · IIT Kanpur
           </span>
           <span>next.js · static export · github pages</span>
         </Frame>

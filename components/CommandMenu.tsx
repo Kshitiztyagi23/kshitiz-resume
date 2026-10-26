@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useMemo, useRef, useState, type KeyboardEvent } from 'react'
-import { resumeData } from '@/lib/data'
-import { resumeHref, sections, slugify } from '@/lib/site'
+import { personal, experience, projects } from '@/lib/content'
+import { resumeHref, sections } from '@/lib/site'
 
 interface CommandMenuProps {
   isOpen: boolean
@@ -10,7 +10,7 @@ interface CommandMenuProps {
 }
 
 interface Item {
-  group: 'goto' | 'project' | 'action'
+  group: 'goto' | 'work' | 'project' | 'action'
   label: string
   hint?: string
   run: () => void
@@ -35,8 +35,8 @@ export default function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
   const items = useMemo<Item[]>(() => {
     const jump = (hash: string) => () => {
       onClose()
-      document.getElementById(hash)?.scrollIntoView()
-      history.replaceState(null, '', `#${hash}`)
+      if (window.location.hash === `#${hash}`) document.getElementById(hash)?.scrollIntoView()
+      else window.location.hash = hash
     }
     const open = (url: string) => () => {
       window.open(url, '_blank', 'noopener')
@@ -44,25 +44,23 @@ export default function CommandMenu({ isOpen, onClose }: CommandMenuProps) {
     }
     return [
       ...sections.map((s) => ({ group: 'goto' as const, label: s.label, hint: `#${s.id}`, run: jump(s.id) })),
-      ...resumeData.projects.map((p) => ({
-        group: 'project' as const,
-        label: p.name,
-        hint: p.category,
-        run: jump(p.featured ? `project-${slugify(p.name)}` : 'projects'),
-      })),
+      ...experience.flatMap((job) =>
+        job.items.map((w) => ({ group: 'work' as const, label: w.title, hint: job.company, run: jump(w.slug) })),
+      ),
+      ...projects.map((p) => ({ group: 'project' as const, label: p.title, hint: p.context, run: jump(p.slug) })),
       {
         group: 'action',
         label: 'copy email',
-        hint: resumeData.personal.email,
+        hint: personal.email,
         run: () => {
-          navigator.clipboard.writeText(resumeData.personal.email)
+          navigator.clipboard.writeText(personal.email)
           setCopied(true)
           setTimeout(() => setCopied(false), 1800)
         },
       },
       { group: 'action', label: 'open cv.pdf', run: open(resumeHref) },
-      { group: 'action', label: 'open github', hint: resumeData.personal.github, run: open(resumeData.personal.githubUrl) },
-      { group: 'action', label: 'open linkedin', hint: resumeData.personal.linkedin, run: open(resumeData.personal.linkedinUrl) },
+      { group: 'action', label: 'open github', hint: personal.github, run: open(personal.githubUrl) },
+      { group: 'action', label: 'open linkedin', hint: personal.linkedin, run: open(personal.linkedinUrl) },
     ]
   }, [onClose])
 

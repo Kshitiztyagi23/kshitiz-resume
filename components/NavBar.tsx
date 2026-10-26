@@ -28,7 +28,7 @@ export default function NavBar({ onOpenCommand }: NavBarProps) {
   return (
     <header className="fixed inset-x-0 top-0 z-40 border-b border-line bg-ink-950">
       <div className="mx-auto flex h-14 w-full max-w-frame items-center justify-between gap-6 px-5 sm:px-8">
-        <a href="#about" className="font-mono text-[13px] text-fg">
+        <a href="#top" className="font-mono text-[13px] text-fg">
           <span className="text-accent">~</span>/kshitiz-tyagi
         </a>
 

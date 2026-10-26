@@ -5,7 +5,7 @@ import type { Pipeline, PipelineStage, StageKind } from '@/lib/pipelines'
 
 const NODE_H = 56
 const ROW_GAP = 22
-const COL_GAP = 28
+const COL_GAP = 22
 const LOOP_LANE = 34 // headroom for back edges routed over the top
 
 const KIND: Record<StageKind, string> = {

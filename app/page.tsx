@@ -4,11 +4,9 @@ import { useCallback, useEffect, useState } from 'react'
 import NavBar from '@/components/NavBar'
 import Hero from '@/components/Hero'
 import Experience from '@/components/Experience'
-import Publications from '@/components/Publications'
 import Projects from '@/components/Projects'
-import Skills from '@/components/Skills'
-import Positions from '@/components/Positions'
-import Education from '@/components/Education'
+import Research from '@/components/Research'
+import About from '@/components/About'
 import Footer from '@/components/Footer'
 import CommandMenu from '@/components/CommandMenu'
 
@@ -33,11 +31,9 @@ export default function Home() {
       <main>
         <Hero />
         <Experience />
-        <Publications />
         <Projects />
-        <Skills />
-        <Positions />
-        <Education />
+        <Research />
+        <About />
       </main>
       <Footer />
       <CommandMenu isOpen={commandOpen} onClose={closeCommand} />
